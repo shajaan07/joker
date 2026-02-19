@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fakeer Delites · Homely Food in Latur</title>
+  <title>Fakeer Delites · Cinematic Homely Food in Latur</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Fakeer Delites – cinematic restaurant experience with homely food, tiffin and snacks in Latur."
+    content="Fakeer Delites – cinematic 4K-style restaurant interface for homely meals, snacks and tiffin in Latur."
   />
 
   <style>
@@ -19,23 +20,25 @@
 
     :root {
       --bg: #020617;
-      --bg-alt: #02081c;
-      --glass: rgba(15, 23, 42, 0.82);
-      --border-soft: rgba(148, 163, 184, 0.32);
+      --bg-alt: #050816;
+      --glass: rgba(15, 23, 42, 0.8);
+      --glass-strong: rgba(15, 23, 42, 0.96);
+      --border-soft: rgba(148, 163, 184, 0.35);
       --accent: #f97316;
       --accent-strong: #fb923c;
-      --accent-soft: rgba(249, 115, 22, 0.18);
+      --accent-soft: rgba(249, 115, 22, 0.16);
       --accent-pink: #fb7185;
       --accent-blue: #38bdf8;
       --text: #f9fafb;
       --muted: #9ca3af;
-      --radius-xl: 28px;
-      --radius-lg: 18px;
+      --radius-xl: 30px;
+      --radius-lg: 20px;
       --radius-md: 14px;
-      --shadow-xl: 0 40px 120px rgba(0, 0, 0, 0.85);
-      --shadow-md: 0 20px 60px rgba(15, 23, 42, 0.9);
+      --shadow-xl: 0 50px 180px rgba(0, 0, 0, 0.9);
+      --shadow-md: 0 28px 80px rgba(15, 23, 42, 0.95);
       --blur-strong: 32px;
       --transition-fast: 160ms ease-out;
+      --transition-med: 220ms ease-out;
     }
 
     html, body {
@@ -47,7 +50,8 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Inter", sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at top, #0b1220 0%, #020617 45%, #000 100%);
+      background:
+        radial-gradient(circle at top, #020617 0%, #000 65%) fixed;
       overflow-x: hidden;
     }
 
@@ -56,53 +60,79 @@
       text-decoration: none;
     }
 
-    /* ---------- BACKGROUND FX ---------- */
+    /* ---------- BACKGROUND FX + IMAGE LAYERS ---------- */
+
     .layer-gradient {
       position: fixed;
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 5% 0%, rgba(249, 115, 22, 0.16), transparent 55%),
-        radial-gradient(circle at 85% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
-        radial-gradient(circle at 40% 90%, rgba(236, 72, 153, 0.16), transparent 55%);
-      opacity: 0.9;
-      z-index: -3;
+        radial-gradient(circle at 4% 0%, rgba(249, 115, 22, 0.2), transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.18), transparent 55%),
+        radial-gradient(circle at 40% 90%, rgba(236, 72, 153, 0.2), transparent 55%);
+      z-index: -4;
     }
 
     .layer-grid {
       position: fixed;
       inset: 0;
-      opacity: 0.25;
       pointer-events: none;
-      background-image: linear-gradient(
-          rgba(15, 23, 42, 0.7) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(15, 23, 42, 0.7) 1px,
-          transparent 1px
-        );
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.7) 1px, transparent 1px);
       background-size: 80px 80px;
-      mask-image: radial-gradient(circle at center, black, transparent);
-      z-index: -2;
+      mask-image: radial-gradient(circle at center, black, transparent 70%);
+      z-index: -3;
     }
 
     .layer-noise {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.2'/%3E%3C/svg%3E");
       mix-blend-mode: soft-light;
       opacity: 0.7;
-      z-index: -1;
+      z-index: -2;
     }
 
-    /* ---------- PAGE LAYOUT ---------- */
+    /* Ambient accent 4K images – you must provide ambient-left.webp & ambient-right.webp */
+    .ambient-image {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(0px) saturate(1.2);
+      opacity: 0.14;
+      mix-blend-mode: screen;
+      z-index: -1;
+      transition: transform 12s ease-out;
+    }
+
+    .ambient-left {
+      left: -120px;
+      top: 10%;
+      background-image: url("ambient-left.webp");
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+
+    .ambient-right {
+      right: -130px;
+      bottom: 0;
+      background-image: url("ambient-right.webp");
+      transform: translate3d(0, 0, 0) scale(1.1);
+    }
+
+    .ambient-image.motion {
+      transform: translate3d(20px, -20px, 0) scale(1.12);
+    }
+
+    /* ---------- PAGE SHELL ---------- */
     .page {
-      max-width: 1320px;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 26px 22px 80px;
+      padding: 28px 22px 90px;
     }
 
     header {
@@ -120,20 +150,22 @@
     }
 
     .brand-orb {
-      width: 48px;
-      height: 48px;
-      border-radius: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 22px;
       background:
-        conic-gradient(from 220deg, #f97316, #ec4899, #38bdf8, #f97316);
+        conic-gradient(from 220deg, #f97316, #ec4899, #38bdf8, #22c55e, #f97316);
       padding: 2px;
-      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.92);
+      animation: orb-spin 18s linear infinite;
     }
 
     .brand-orb-inner {
       width: 100%;
       height: 100%;
-      border-radius: 18px;
-      background: radial-gradient(circle at 25% 15%, #fff7ed, #fed7aa 40%, #0f172a);
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 25% 15%, #fff7ed, #fed7aa 40%, #0f172a 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -144,7 +176,7 @@
 
     .brand-text h1 {
       font-size: 22px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
@@ -165,16 +197,17 @@
       align-items: center;
       gap: 8px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.6);
       background: linear-gradient(
         120deg,
-        rgba(15, 23, 42, 0.9),
-        rgba(15, 23, 42, 0.7)
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.8)
       );
       padding: 6px 14px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--muted);
+      backdrop-filter: blur(20px);
     }
 
     .pulse-dot {
@@ -182,19 +215,28 @@
       height: 8px;
       border-radius: 999px;
       background: #22c55e;
-      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.35);
-      animation: pulse 1.2s infinite;
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.4);
+      animation: pulse 1.1s infinite;
     }
 
     .nav-link {
       color: #bfdbfe;
       cursor: pointer;
-      opacity: 0.8;
+      opacity: 0.82;
       transition: opacity var(--transition-fast);
     }
 
     .nav-link:hover {
       opacity: 1;
+    }
+
+    @keyframes orb-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes pulse {
@@ -211,28 +253,71 @@
     /* ---------- MAIN GRID ---------- */
     .grid-main {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1.1fr);
       gap: 24px;
       align-items: flex-start;
     }
 
-    /* ---------- HERO PANEL ---------- */
+    /* ---------- HERO WITH 4K BACKGROUND ---------- */
     .hero {
       position: relative;
       border-radius: var(--radius-xl);
-      background: radial-gradient(circle at 0 0, rgba(251, 191, 36, 0.18), transparent 55%),
-        radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.18), transparent 50%),
-        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-xl);
-      padding: 24px 24px 18px;
       overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-soft);
+      background: #020617;
+      isolation: isolate;
+    }
+
+    /* 4K background image slots – provide hero-bg-1.webp & hero-bg-2.webp */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.18) contrast(1.06);
+      transform: scale(1.06);
+      transition: opacity 1.2s ease-out, transform 16s ease-out;
+      opacity: 0;
+    }
+
+    .hero-bg.primary {
+      background-image: url("hero-bg-1.webp");
+      opacity: 0.65;
+    }
+
+    .hero-bg.secondary {
+      background-image: url("hero-bg-2.webp");
+      opacity: 0;
+    }
+
+    .hero-bg.motion {
+      transform: scale(1.14) translate3d(8px, -8px, 0);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.82)),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      mix-blend-mode: multiply;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 24px 24px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
       backdrop-filter: blur(var(--blur-strong));
     }
 
-    .hero-inner {
-      position: relative;
-      z-index: 2;
+    .hero-left {
+      padding-right: 6px;
     }
 
     .hero-eyebrow {
@@ -247,17 +332,17 @@
     .hero-tag {
       padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
       text-transform: uppercase;
       letter-spacing: 0.16em;
       font-size: 11px;
     }
 
     .hero-title {
-      font-size: clamp(30px, 3.4vw, 38px);
+      font-size: clamp(30px, 3.6vw, 40px);
       line-height: 1.2;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .hero-title span {
@@ -269,7 +354,7 @@
     .hero-subtitle {
       font-size: 14px;
       color: var(--muted);
-      max-width: 32rem;
+      max-width: 34rem;
       margin-bottom: 20px;
     }
 
@@ -287,9 +372,10 @@
       gap: 7px;
       padding: 6px 11px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(55, 65, 81, 0.95);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(55, 65, 81, 0.98);
       color: var(--muted);
+      backdrop-filter: blur(20px);
     }
 
     .hero-chip strong {
@@ -318,23 +404,23 @@
       gap: 8px;
       color: #0b1120;
       background: linear-gradient(120deg, #fb923c, #f97316, #ea580c);
-      box-shadow: 0 22px 50px rgba(249, 115, 22, 0.5);
+      box-shadow: 0 26px 70px rgba(249, 115, 22, 0.6);
       transform: translateY(0);
-      transition: transform var(--transition-fast),
-        box-shadow var(--transition-fast), filter var(--transition-fast);
+      transition: transform var(--transition-med),
+        box-shadow var(--transition-med), filter var(--transition-med);
     }
 
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 26px 60px rgba(249, 115, 22, 0.6);
+      transform: translateY(-1px) translateZ(0);
+      box-shadow: 0 32px 80px rgba(249, 115, 22, 0.7);
       filter: brightness(1.05);
     }
 
     .btn-ghost {
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.98);
       cursor: pointer;
       font-size: 12px;
       display: inline-flex;
@@ -342,13 +428,14 @@
       gap: 6px;
       color: var(--muted);
       transition: background var(--transition-fast), border var(--transition-fast),
-        color var(--transition-fast);
+        color var(--transition-fast), transform var(--transition-fast);
     }
 
     .btn-ghost:hover {
       background: rgba(15, 23, 42, 1);
-      border-color: rgba(226, 232, 240, 0.8);
+      border-color: rgba(226, 232, 240, 0.9);
       color: #e5e7eb;
+      transform: translateY(-0.5px);
     }
 
     .hero-bottom {
@@ -358,7 +445,7 @@
       gap: 14px;
       font-size: 11px;
       color: var(--muted);
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .hero-rating {
@@ -388,76 +475,144 @@
       color: #e5e7eb;
     }
 
-    /* Visual card on right of hero */
-    .hero-visual {
-      position: absolute;
-      right: -10px;
-      bottom: -6px;
-      width: 210px;
-      height: 210px;
-      border-radius: 40px;
-      background: radial-gradient(circle at 10% 0, #fef3c7, #fed7aa, #f97316);
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(248, 250, 252, 0.3);
-      overflow: hidden;
+    /* Right side of hero – “animated plate card” */
+    .hero-right {
       display: flex;
       flex-direction: column;
+      gap: 10px;
       justify-content: space-between;
-      padding: 12px;
     }
 
-    .hero-visual-top {
+    .hero-plate {
+      border-radius: 26px;
+      background: linear-gradient(145deg, #020617, #0f172a);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+      padding: 12px 12px 10px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-plate::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(251, 191, 36, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.24), transparent 55%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-plate-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-plate-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: #1f2937;
-      font-weight: 600;
-    }
-
-    .hero-visual-chip {
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
-      font-size: 10px;
-    }
-
-    .hero-visual-main {
-      font-size: 14px;
-      font-weight: 800;
-      color: #111827;
-      margin-top: 6px;
+      color: #9ca3af;
       margin-bottom: 6px;
     }
 
-    .hero-visual-tags {
+    .hero-plate-chip {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-plate-main {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* 4K food image slot – provide dish-plate.webp */
+    .hero-plate-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 999px;
+      background-image: url("dish-plate.webp");
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+      border: 2px solid rgba(248, 250, 252, 0.6);
+      flex-shrink: 0;
+    }
+
+    .hero-plate-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-plate-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+
+    .hero-plate-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-plate-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
       font-size: 9px;
-      color: #374151;
     }
 
-    .hero-visual-tags span {
+    .hero-plate-tags span {
       padding: 3px 7px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(55, 65, 81, 0.95);
     }
 
-    .hero-visual-footer {
+    .hero-plate-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 10px;
-      color: #4b5563;
       margin-top: 8px;
+      font-size: 11px;
+      color: #9ca3af;
     }
 
-    .hero-visual-footer strong {
+    .hero-plate-footer strong {
       font-size: 12px;
-      color: #111827;
+      color: #facc15;
+    }
+
+    .hero-plate-footer span.bubble {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-labels-row {
+      display: flex;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .hero-labels-row span {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
     }
 
     /* ---------- RIGHT COLUMN: MENU + FORM ---------- */
@@ -469,10 +624,10 @@
 
     .card {
       border-radius: var(--radius-lg);
-      background: var(--glass);
+      background: var(--glass-strong);
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-md);
-      padding: 16px 16px 14px;
+      padding: 18px 16px 16px;
       backdrop-filter: blur(26px);
     }
 
@@ -504,8 +659,8 @@
     .pill-option {
       padding: 4px 9px;
       border-radius: 999px;
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(75, 85, 99, 0.95);
+      background: rgba(15, 23, 42, 0.98);
       color: var(--muted);
       cursor: pointer;
       transition: background var(--transition-fast), border var(--transition-fast),
@@ -552,8 +707,8 @@
       border-radius: 12px;
       padding: 6px 8px;
       background: radial-gradient(circle at 0 0, rgba(249, 115, 22, 0.12), transparent 65%),
-        rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(31, 41, 55, 0.95);
+        rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(31, 41, 55, 0.98);
     }
 
     .menu-item-main {
@@ -632,9 +787,9 @@
     input,
     select,
     textarea {
-      background: rgba(15, 23, 42, 0.96);
+      background: rgba(15, 23, 42, 0.98);
       border-radius: var(--radius-md);
-      border: 1px solid rgba(55, 65, 81, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.98);
       color: var(--text);
       padding: 7px 9px;
       font-size: 12px;
@@ -656,7 +811,7 @@
     textarea:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.55);
-      background: rgba(15, 23, 42, 0.98);
+      background: rgba(15, 23, 42, 1);
       transform: translateY(-0.5px);
     }
 
@@ -687,7 +842,7 @@
       gap: 6px;
       padding: 4px 11px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.98);
+      background: rgba(15, 23, 42, 1);
       border: 1px solid rgba(55, 65, 81, 0.95);
     }
 
@@ -696,7 +851,7 @@
       height: 7px;
       border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.35);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.4);
     }
 
     footer {
@@ -730,7 +885,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
       opacity: 0;
       transform: translateY(10px);
       pointer-events: none;
@@ -765,17 +920,18 @@
     }
 
     /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 960px) {
-      .grid-main {
+    @media (max-width: 1040px) {
+      .hero-content {
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .hero {
-        min-height: 0;
+      .hero-right {
+        order: -1;
       }
+    }
 
-      .hero-visual {
-        display: none;
+    @media (max-width: 920px) {
+      .grid-main {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
@@ -784,26 +940,29 @@
         flex-direction: column;
         align-items: flex-start;
       }
-
       .nav-right {
         width: 100%;
         justify-content: space-between;
       }
-
       .page {
         padding-inline: 16px;
       }
-
       .order-form {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-content {
+        padding: 18px 16px 16px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- 4K ambient layers -->
   <div class="layer-gradient"></div>
   <div class="layer-grid"></div>
   <div class="layer-noise"></div>
+  <div class="ambient-image ambient-left"></div>
+  <div class="ambient-image ambient-right"></div>
 
   <div class="page">
     <header>
@@ -830,82 +989,105 @@
     </header>
 
     <main class="grid-main">
-      <!-- HERO LEFT -->
+      <!-- HERO with 4K background -->
       <section class="hero">
-        <div class="hero-inner">
-          <div class="hero-eyebrow">
-            <span class="hero-tag">Homely food · Everyday</span>
-            <span>Hostel, PG and family-friendly portions</span>
-          </div>
+        <div class="hero-bg primary"></div>
+        <div class="hero-bg secondary" id="hero-alt-bg"></div>
+        <div class="hero-overlay"></div>
 
-          <h2 class="hero-title">
-            Your comfort meal,
-            <span>cinematically plated</span> in Latur.
-          </h2>
-
-          <p class="hero-subtitle">
-            Fakeer Delites brings micro‑restaurant attention to everyday food. One form and
-            we call you back to confirm, customise spice, and deliver hot meals to your
-            door, hostel or office.
-          </p>
-
-          <div class="hero-meta-row">
-            <span class="hero-chip">
-              <strong>₹99–₹399</strong> · budget plates &amp; thalis
-            </span>
-            <span class="hero-chip">Cash / UPI after confirmation</span>
-            <span class="hero-chip">Jain, less oil, diet-friendly options</span>
-          </div>
-
-          <div class="hero-actions">
-            <button class="btn-primary" type="button" onclick="scrollToForm()">
-              Start my food order
-              <span>↓</span>
-            </button>
-            <button class="btn-ghost" type="button" onclick="showConfirmationInfo()">
-              How confirmation works
-            </button>
-          </div>
-
-          <div class="hero-bottom">
-            <div class="hero-rating">
-              <span class="hero-stars">★★★★★</span>
-              <span>Trusted by hostel students &amp; families in Latur</span>
+        <div class="hero-content">
+          <div class="hero-left">
+            <div class="hero-eyebrow">
+              <span class="hero-tag">Homely food · Everyday</span>
+              <span>Hostel, PG and family-friendly portions</span>
             </div>
-            <div class="hero-metrics">
-              <div class="hero-metric">
-                <strong>5000+</strong>
-                <span>Plates served</span>
+
+            <h2 class="hero-title">
+              Your comfort meal,
+              <span>cinematically plated</span> in Latur.
+            </h2>
+
+            <p class="hero-subtitle">
+              Fakeer Delites brings micro‑restaurant attention to everyday food. One form and
+              we call you back to confirm, customise spice, and deliver hot meals to your
+              door, hostel or office.
+            </p>
+
+            <div class="hero-meta-row">
+              <span class="hero-chip">
+                <strong>₹99–₹399</strong> · budget plates &amp; thalis
+              </span>
+              <span class="hero-chip">Cash / UPI after confirmation</span>
+              <span class="hero-chip">Jain, less oil, diet-friendly options</span>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn-primary" type="button" onclick="scrollToForm()">
+                Start my food order
+                <span>↓</span>
+              </button>
+              <button class="btn-ghost" type="button" onclick="showConfirmationInfo()">
+                How confirmation works
+              </button>
+            </div>
+
+            <div class="hero-bottom">
+              <div class="hero-rating">
+                <span class="hero-stars">★★★★★</span>
+                <span>Trusted by hostel students &amp; families in Latur</span>
               </div>
-              <div class="hero-metric">
-                <strong>15–30 min</strong>
-                <span>Avg. delivery radius</span>
+              <div class="hero-metrics">
+                <div class="hero-metric">
+                  <strong>5000+</strong>
+                  <span>Plates served</span>
+                </div>
+                <div class="hero-metric">
+                  <strong>15–30 min</strong>
+                  <span>Avg. delivery radius</span>
+                </div>
               </div>
             </div>
           </div>
+
+          <aside class="hero-right">
+            <div class="hero-plate">
+              <div class="hero-plate-inner">
+                <div class="hero-plate-header">
+                  <span>Today’s signature</span>
+                  <span class="hero-plate-chip">Veg only</span>
+                </div>
+                <div class="hero-plate-main">
+                  <div class="hero-plate-image"></div>
+                  <div class="hero-plate-text">
+                    <div class="hero-plate-title">Paneer Thali + Gulab Jamun</div>
+                    <div class="hero-plate-sub">
+                      Micro‑balanced thali for evening study sessions and late‑night hostel hangs.
+                    </div>
+                    <div class="hero-plate-tags">
+                      <span>North Indian</span>
+                      <span>Tiffin friendly</span>
+                      <span>Comfort spice</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="hero-plate-footer">
+                  <div>From <strong>₹149</strong> · plate</div>
+                  <span class="bubble">“Feels like home food.”</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-labels-row">
+              <span>Daily rotating sabzi and dal</span>
+              <span>Office &amp; hostel tiffin plans</span>
+              <span>Bulk &amp; party orders welcome</span>
+            </div>
+          </aside>
         </div>
-
-        <aside class="hero-visual">
-          <div class="hero-visual-top">
-            <span>Today’s favourites</span>
-            <span class="hero-visual-chip">Veg only</span>
-          </div>
-          <div class="hero-visual-main">Paneer Thali + Gulab Jamun</div>
-          <div class="hero-visual-tags">
-            <span>North Indian</span>
-            <span>Tiffin friendly</span>
-            <span>Comfort spice</span>
-          </div>
-          <div class="hero-visual-footer">
-            <div>from <strong>₹149</strong></div>
-            <div>“Feels like home food.”</div>
-          </div>
-        </aside>
       </section>
 
-      <!-- RIGHT COLUMN -->
+      <!-- RIGHT COLUMN: MENU + FORM -->
       <section class="right-col">
-        <!-- MENU PREVIEW -->
         <article class="card">
           <div class="menu-header">
             <div>
@@ -979,7 +1161,6 @@
           </p>
         </article>
 
-        <!-- ORDER FORM -->
         <article id="order-card" class="card" aria-label="Order form">
           <div class="order-header">
             <div>
@@ -1188,6 +1369,29 @@
       const toast = document.getElementById("toast");
       toast.classList.remove("show");
     }
+
+    // Soft parallax / motion for ambient images and hero bg
+    window.addEventListener("load", () => {
+      const ambientLeft = document.querySelector(".ambient-left");
+      const ambientRight = document.querySelector(".ambient-right");
+      const heroPrimary = document.querySelector(".hero-bg.primary");
+      const heroSecondary = document.getElementById("hero-alt-bg");
+
+      // Add slow motion class
+      setTimeout(() => {
+        ambientLeft.classList.add("motion");
+        ambientRight.classList.add("motion");
+        heroPrimary.classList.add("motion");
+      }, 600);
+
+      // Optional crossfade to secondary hero background if you add second image
+      if (heroSecondary) {
+        setTimeout(() => {
+          heroSecondary.style.opacity = "0.55";
+          heroSecondary.classList.add("motion");
+        }, 6000);
+      }
+    });
 
     const form = document.getElementById("order-form");
     const submitBtn = document.getElementById("submit-btn");
